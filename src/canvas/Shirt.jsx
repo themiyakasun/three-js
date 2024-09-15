@@ -1,3 +1,4 @@
+import React from 'react';
 import { easing } from 'maath';
 import { useSnapshot } from 'valtio';
 import { useFrame } from '@react-three/fiber';
@@ -13,10 +14,10 @@ const Shirt = () => {
   const fullTexture = useTexture(snap.fullDecal);
 
   useFrame((state, delta) =>
-    easing.dampC(materials.lambert1.color, snap.color, delta)
+    easing.dampC(materials.lambert1.color, snap.color, 0.25, delta)
   );
 
-  const stateString = JSON.stringify(state);
+  const stateString = JSON.stringify(snap);
 
   return (
     <group key={stateString}>
@@ -42,6 +43,7 @@ const Shirt = () => {
             rotation={[0, 0, 0]}
             scale={0.15}
             map={logoTexture}
+            anisotropy={16}
             depthTest={false}
             depthWrite={true}
           />
