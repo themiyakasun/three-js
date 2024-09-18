@@ -20,7 +20,7 @@ const Customizer = () => {
   const snap = useSnapshot(state);
 
   const [file, setFile] = useState('');
-  const [prompt, setPropmt] = useState('');
+  const [prompt, setPrompt] = useState('');
   const [generatingImg, setGeneratingImg] = useState(false);
   const [activeEditorTab, setActiveEditorTab] = useState('');
   const [activeFilterTab, setActiveFilterTab] = useState({
@@ -37,9 +37,29 @@ const Customizer = () => {
       case 'filepicker':
         return <FilePicker file={file} setFile={setFile} readFile={readFile} />;
       case 'aipicker':
-        return <AiPicker />;
+        return (
+          <AiPicker
+            prompt={prompt}
+            setPrompt={setPrompt}
+            generatingImg={generatingImg}
+            handleSubmit={handleSubmit}
+          />
+        );
       default:
         return null;
+    }
+  };
+
+  const handleSubmit = async (type) => {
+    if (!prompt) return alert('Please enter a prompt');
+
+    try {
+      // call backend to generate ai image
+    } catch (error) {
+      alert(error);
+    } finally {
+      setGeneratingImg(false);
+      setActiveEditorTab('');
     }
   };
 
